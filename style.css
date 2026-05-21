@@ -428,21 +428,105 @@ a {
   box-shadow: 0 0 20px var(--accent-glow);
 }
 
-/* Cards */
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 20px;
+/* ==================== Timeline ==================== */
+.timeline {
+  position: relative;
+  max-width: 960px;
+  margin: 0 auto;
 }
 
-.card {
+/* Center line */
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, var(--border) 5%, var(--border) 95%, transparent);
+  transform: translateX(-50%);
+}
+
+/* Timeline item */
+.tl-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 40px;
+  width: 50%;
+}
+
+.tl-item.left {
+  padding-right: 48px;
+  justify-content: flex-end;
+}
+
+.tl-item.right {
+  margin-left: 50%;
+  padding-left: 48px;
+}
+
+/* Dot on timeline */
+.tl-dot {
+  position: absolute;
+  top: 24px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid var(--bg);
+  box-shadow: 0 0 12px var(--accent-glow);
+  z-index: 2;
+}
+
+.tl-item.left .tl-dot {
+  right: -6px;
+}
+
+.tl-item.right .tl-dot {
+  left: -6px;
+}
+
+/* Date label */
+.tl-date {
+  position: absolute;
+  top: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+
+.tl-item.left .tl-date {
+  right: -60px;
+}
+
+.tl-item.right .tl-date {
+  left: -60px;
+}
+
+.tl-day {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.tl-month {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Card in timeline */
+.tl-card {
   position: relative;
   border-radius: var(--radius);
   cursor: pointer;
   transition: transform var(--transition);
+  width: 100%;
 }
 
-.card:hover {
+.tl-card:hover {
   transform: translateY(-4px);
 }
 
@@ -460,20 +544,20 @@ a {
   );
 }
 
-.card:hover .card-glow {
+.tl-card:hover .card-glow {
   opacity: 1;
 }
 
-.card[data-category="tech"] .card-glow {
+[data-category="tech"] .card-glow {
   background: radial-gradient(400px circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(59,130,246,0.15), transparent 60%);
 }
-.card[data-category="life"] .card-glow {
+[data-category="life"] .card-glow {
   background: radial-gradient(400px circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(16,185,129,0.15), transparent 60%);
 }
-.card[data-category="career"] .card-glow {
+[data-category="career"] .card-glow {
   background: radial-gradient(400px circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(245,158,11,0.15), transparent 60%);
 }
-.card[data-category="english"] .card-glow {
+[data-category="english"] .card-glow {
   background: radial-gradient(400px circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(167,139,250,0.15), transparent 60%);
 }
 
@@ -487,10 +571,9 @@ a {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   transition: all var(--transition);
-  height: 100%;
 }
 
-.card:hover .card-inner {
+.tl-card:hover .card-inner {
   border-color: var(--border-hover);
   background: var(--bg-card-hover);
 }
@@ -531,7 +614,7 @@ a {
   color: var(--text-muted);
 }
 
-.card.hidden {
+.tl-item.hidden {
   display: none;
 }
 
@@ -623,8 +706,8 @@ a {
 /* ==================== Animations ==================== */
 .fade-in {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .fade-in.visible {
@@ -632,8 +715,23 @@ a {
   transform: translateY(0);
 }
 
+.tl-item.left.fade-in {
+  transform: translateX(-30px);
+}
+
+.tl-item.right.fade-in {
+  transform: translateX(30px);
+}
+
+.tl-item.left.fade-in.visible,
+.tl-item.right.fade-in.visible {
+  transform: translateX(0);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .fade-in {
+  .fade-in,
+  .tl-item.left.fade-in,
+  .tl-item.right.fade-in {
     opacity: 1;
     transform: none;
     transition: none;
@@ -642,7 +740,7 @@ a {
     animation: none;
     background-position: 0% 50%;
   }
-  .card:hover {
+  .tl-card:hover {
     transform: none;
   }
 }
@@ -693,6 +791,14 @@ a {
 
   .card-title {
     font-size: 15px;
+  }
+
+  .tl-item {
+    padding-left: 44px;
+  }
+
+  .tl-date {
+    left: -44px !important;
   }
 
   .card-excerpt {
@@ -846,14 +952,40 @@ a {
     align-items: center;
   }
 
-  /* Cards — single column */
-  .card-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
+  /* Timeline — single column on mobile */
+  .timeline::before {
+    left: 16px;
+  }
+
+  .tl-item {
+    width: 100%;
+    padding-left: 48px;
+    padding-right: 0;
+    margin-left: 0;
+  }
+
+  .tl-item.left {
+    padding-right: 0;
+    justify-content: flex-start;
+  }
+
+  .tl-item.right {
+    margin-left: 0;
+  }
+
+  .tl-dot {
+    left: 10px !important;
+    right: auto !important;
+  }
+
+  .tl-date {
+    left: -48px !important;
+    right: auto !important;
+    flex-direction: column;
   }
 
   .card-inner {
-    padding: 24px;
+    padding: 22px;
   }
 
   /* About */
@@ -875,10 +1007,7 @@ a {
 
 /* Large phones landscape & small tablets (481px – 768px) */
 @media (min-width: 481px) and (max-width: 768px) {
-  .card-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
+  /* Timeline stays single column, just wider cards */
 }
 
 /* Tablets (769px – 1024px) */
@@ -887,21 +1016,14 @@ a {
     padding: 80px 32px;
   }
 
-  .card-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-
   .hero-title {
     font-size: 56px;
   }
 }
 
-/* Desktop (≥1025px) — ensure no horizontal overflow */
+/* Desktop (≥1025px) */
 @media (min-width: 1025px) {
-  .card-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  /* Timeline uses default two-column alternating layout */
 }
 
 /* Safe area support for notched phones */
@@ -949,21 +1071,32 @@ a, button, .card, .filter-btn, .tag {
 
 /* Mobile: active state instead of hover for cards */
 @media (max-width: 768px) {
-  .card:hover {
+  .tl-card:hover {
     transform: none;
   }
 
-  .card:active {
+  .tl-card:active {
     transform: scale(0.98);
   }
 
-  .card:active .card-inner {
+  .tl-card:active .card-inner {
     border-color: var(--border-hover);
     background: var(--bg-card-hover);
   }
 
-  .card:active .card-glow {
+  .tl-card:active .card-glow {
     opacity: 1;
+  }
+
+  /* On mobile, animations come from below */
+  .tl-item.left.fade-in,
+  .tl-item.right.fade-in {
+    transform: translateY(30px);
+  }
+
+  .tl-item.left.fade-in.visible,
+  .tl-item.right.fade-in.visible {
+    transform: translateY(0);
   }
 
   /* Close menu on link tap */

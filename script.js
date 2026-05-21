@@ -6,28 +6,27 @@ navLinks.addEventListener('click', (e) => {
   if (e.target.tagName === 'A') navLinks.classList.remove('open');
 });
 
-// ==================== Filter cards ====================
+// ==================== Filter timeline ====================
 const filterBtns = document.querySelectorAll('.filter-btn');
-const cards = document.querySelectorAll('.card');
+const tlItems = document.querySelectorAll('.tl-item');
 
 filterBtns.forEach((btn) => {
   btn.addEventListener('click', () => {
     filterBtns.forEach((b) => b.classList.remove('active'));
     btn.classList.add('active');
     const filter = btn.dataset.filter;
-    cards.forEach((card) => {
-      const match = filter === 'all' || card.dataset.category === filter;
+    tlItems.forEach((item) => {
+      const match = filter === 'all' || item.dataset.category === filter;
       if (match) {
-        card.classList.remove('hidden');
-        card.classList.remove('visible');
-        // Re-trigger entrance animation
+        item.classList.remove('hidden');
+        item.classList.remove('visible');
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
-            card.classList.add('visible');
+            item.classList.add('visible');
           });
         });
       } else {
-        card.classList.add('hidden');
+        item.classList.add('hidden');
       }
     });
   });
@@ -45,11 +44,11 @@ const revealObserver = new IntersectionObserver(
   { threshold: 0.05 }
 );
 
-// Observe cards with stagger
-document.querySelectorAll('.card').forEach((card, i) => {
-  card.style.transitionDelay = `${i * 60}ms`;
-  card.classList.add('fade-in');
-  revealObserver.observe(card);
+// Observe timeline items with stagger
+document.querySelectorAll('.tl-item').forEach((item, i) => {
+  item.style.transitionDelay = `${i * 80}ms`;
+  item.classList.add('fade-in');
+  revealObserver.observe(item);
 });
 
 // Observe other elements
@@ -84,7 +83,7 @@ const counterObserver = new IntersectionObserver(
 document.querySelectorAll('.stat-number').forEach((el) => counterObserver.observe(el));
 
 // ==================== Card glow follow mouse ====================
-document.querySelectorAll('.card').forEach((card) => {
+document.querySelectorAll('.tl-card').forEach((card) => {
   card.addEventListener('mousemove', (e) => {
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
