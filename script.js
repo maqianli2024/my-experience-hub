@@ -337,21 +337,23 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer();
 });
 
-// Bind click on timeline cards
-document.querySelectorAll('.tl-item').forEach((item) => {
-  const card = item.querySelector('.tl-card');
-  const title = item.querySelector('.card-title').textContent;
+// Bind click on timeline cards (event delegation)
+document.querySelector('.timeline').addEventListener('click', (e) => {
+  const card = e.target.closest('.tl-card');
+  if (!card) return;
+  const item = card.closest('.tl-item');
+  if (!item) return;
+  const titleEl = item.querySelector('.card-title');
+  if (!titleEl) return;
+  const title = titleEl.textContent;
   const category = item.dataset.category;
   const dateEl = item.querySelector('.tl-month');
   const dayEl = item.querySelector('.tl-day');
   const date = dateEl.textContent ? `${dateEl.textContent}.${dayEl.textContent}` : dayEl.textContent;
-
-  card.addEventListener('click', () => {
-    const article = articles[title];
-    if (article) {
-      openDrawer(title, category, date, article.content);
-    }
-  });
+  const article = articles[title];
+  if (article) {
+    openDrawer(title, category, date, article.content);
+  }
 });
 
 // ==================== Media: Lightbox ====================
