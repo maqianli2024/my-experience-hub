@@ -524,3 +524,161 @@ function seekAudio(e, progressEl) {
   const pct = (e.clientX - rect.left) / rect.width;
   audio.currentTime = pct * audio.duration;
 }
+
+// ==================== Effect: Particle Constellation ====================
+(function initParticles() {
+  if (prefersReducedMotion.matches) return;
+  const canvas = document.getElementById('particleCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w, h, particles = [], mouse = { x: -1000, y: -1000 };
+  const PARTICLE_COUNT = 50;
+  const CONNECT_DIST = 150;
+  const MOUSE_RADIUS = 200;
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+
+  function createParticle() {
+    return {
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      r: Math.random() * 1.5 + 0.5,
+      opacity: Math.random() * 0.5 + 0.2
+    };
+  }
+
+  function init() {
+    resize();
+    particles = Array.from({ length: PARTICLE_COUNT }, createParticle);
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    const isDark = document.documentElement.dataset.theme !== 'light';
+    const lineColor = isDark ? '255,255,255' : '0,0,0';
+    const dotColor = isDark ? '59,130,246' : '37,99,235';
+
+    // Update positions
+    for (const p of particles) {
+      // Gentle mouse attraction
+      const dx = mouse.x - p.x;
+      const dy = mouse.y - p.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < MOUSE_RADIUS && dist > 0) {
+        p.vx += dx / dist * 0.02;
+        p.vy += dy / dist * 0.02;
+      }
+      // Damping
+      p.vx *= 0.99;
+      p.vy *= 0.99;
+      p.x += p.vx;
+      p.y += p.vy;
+      // Wrap around
+      if (p.x < 0) p.x = w;
+      if (p.x > w) p.x = 0;
+      if (p.y < 0) p.y = h;
+      if (p.y > h) p.y = 0;
+    }
+
+    // Draw connections
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < CONNECT_DIST) {
+          const alpha = (1 - dist / CONNECT_DIST) * 0.15;
+          ctx.strokeStyle = `rgba(${lineColor},${alpha})`;
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Draw particles
+    for (const p of particles) {
+      ctx.fillStyle = `rgba(${dotColor},${p.opacity})`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize, { passive: true });
+  document.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  }, { passive: true });
+
+  init();
+  draw();
+})();
+
+// ==================== Effect: Click Ripple ====================
+(function initRipple() {
+  if (prefersReducedMotion.matches) return;
+  const canvas = document.getElementById('rippleCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let ripples = [];
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  document.addEventListener('click', (e) => {
+    ripples.push({
+      x: e.clientX,
+      y: e.clientY,
+      r: 0,
+      maxR: 120,
+      opacity: 0.15,
+      speed: 2.5
+    });
+  });
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const isDark = document.documentElement.dataset.theme !== 'light';
+    const color = isDark ? '59,130,246' : '37,99,235';
+
+    ripples = ripples.filter((rp) => {
+      rp.r += rp.speed;
+      rp.opacity *= 0.975;
+      if (rp.opacity < 0.005) return false;
+
+      ctx.strokeStyle = `rgba(${color},${rp.opacity})`;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Second inner ring
+      if (rp.r > 20) {
+        ctx.strokeStyle = `rgba(${color},${rp.opacity * 0.5})`;
+        ctx.lineWidth = 0.8;
+        ctx.beginPath();
+        ctx.arc(rp.x, rp.y, rp.r * 0.6, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      return true;
+    });
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
