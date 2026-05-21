@@ -711,6 +711,10 @@ a {
   margin-top: 2px;
 }
 
+.tl-month:empty {
+  display: none;
+}
+
 /* Card in timeline */
 .tl-card {
   position: relative;
