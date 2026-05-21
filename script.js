@@ -6,7 +6,7 @@ navLinks.addEventListener('click', (e) => {
   if (e.target.tagName === 'A') navLinks.classList.remove('open');
 });
 
-// Filter cards
+// ==================== Filter cards ====================
 const filterBtns = document.querySelectorAll('.filter-btn');
 const cards = document.querySelectorAll('.card');
 
@@ -16,32 +16,28 @@ filterBtns.forEach((btn) => {
     btn.classList.add('active');
     const filter = btn.dataset.filter;
     cards.forEach((card) => {
-      card.classList.toggle('hidden', filter !== 'all' && card.dataset.category !== filter);
+      const match = filter === 'all' || card.dataset.category === filter;
+      if (match) {
+        card.classList.remove('hidden');
+        card.classList.remove('visible');
+        // Re-trigger entrance animation
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            card.classList.add('visible');
+          });
+        });
+      } else {
+        card.classList.add('hidden');
+      }
     });
   });
 });
 
-// Scroll reveal
+// ==================== Scroll reveal ====================
 const revealObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
-    });
-  },
-  { threshold: 0.1 }
-);
-
-document.querySelectorAll('.card, .stat-item, .about-content, .section-header').forEach((el) => {
-  el.classList.add('fade-in');
-  revealObserver.observe(el);
-});
-
-// Stagger card entrance
-const cardObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry, i) => {
       if (entry.isIntersecting) {
-        entry.target.style.transitionDelay = `${i * 60}ms`;
         entry.target.classList.add('visible');
       }
     });
@@ -49,12 +45,20 @@ const cardObserver = new IntersectionObserver(
   { threshold: 0.05 }
 );
 
-document.querySelectorAll('.card').forEach((card) => {
+// Observe cards with stagger
+document.querySelectorAll('.card').forEach((card, i) => {
+  card.style.transitionDelay = `${i * 60}ms`;
   card.classList.add('fade-in');
-  cardObserver.observe(card);
+  revealObserver.observe(card);
 });
 
-// Counter animation
+// Observe other elements
+document.querySelectorAll('.stat-item, .about-content, .section-header').forEach((el) => {
+  el.classList.add('fade-in');
+  revealObserver.observe(el);
+});
+
+// ==================== Counter animation ====================
 const counterObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
@@ -79,7 +83,7 @@ const counterObserver = new IntersectionObserver(
 
 document.querySelectorAll('.stat-number').forEach((el) => counterObserver.observe(el));
 
-// Card glow follow mouse
+// ==================== Card glow follow mouse ====================
 document.querySelectorAll('.card').forEach((card) => {
   card.addEventListener('mousemove', (e) => {
     const rect = card.getBoundingClientRect();
@@ -90,6 +94,7 @@ document.querySelectorAll('.card').forEach((card) => {
   });
 });
 
+// ==================== Navbar behavior ====================
 // Close mobile menu on scroll
 let scrollTimer;
 window.addEventListener('scroll', () => {
@@ -101,19 +106,17 @@ window.addEventListener('scroll', () => {
 
 // Navbar solidify on scroll
 const navbar = document.querySelector('.navbar');
-let lastScrollY = 0;
 window.addEventListener('scroll', () => {
-  lastScrollY = window.scrollY;
-  if (lastScrollY > 50) {
+  if (window.scrollY > 50) {
     navbar.style.borderBottomColor = 'rgba(255,255,255,0.1)';
     navbar.style.background = 'rgba(11,11,16,0.9)';
   } else {
-    navbar.style.borderBottomColor = 'var(--border)';
-    navbar.style.background = 'rgba(11,11,16,0.7)';
+    navbar.style.borderBottomColor = '';
+    navbar.style.background = '';
   }
 }, { passive: true });
 
-// Prefers reduced motion check
+// ==================== Reduced motion ====================
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 if (prefersReducedMotion.matches) {
   document.querySelectorAll('.aurora-blob').forEach((blob) => {
