@@ -832,8 +832,7 @@ a {
   right: 0;
   bottom: 0;
   z-index: 201;
-  width: 480px;
-  max-width: 100%;
+  width: min(960px, 85vw);
   background: var(--bg-elevated);
   border-left: 1px solid var(--border);
   transform: translateX(100%);
@@ -954,6 +953,195 @@ a {
   background: var(--bg-card);
   border: 1px solid var(--border);
   font-family: 'SF Mono', 'Fira Code', monospace;
+}
+
+.drawer-content pre {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  overflow-x: auto;
+  margin-bottom: 18px;
+}
+
+.drawer-content pre code {
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* Media: images */
+.drawer-content img {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  margin-bottom: 18px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.drawer-content img:hover {
+  transform: scale(1.01);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.drawer-media-caption {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: -10px;
+  margin-bottom: 18px;
+}
+
+/* Media: video */
+.drawer-content .media-video {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  margin-bottom: 18px;
+  background: #000;
+}
+
+.drawer-content video {
+  width: 100%;
+  display: block;
+  border-radius: var(--radius-sm);
+}
+
+.drawer-content .video-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.drawer-content .video-overlay:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.drawer-content .video-overlay svg {
+  width: 56px;
+  height: 56px;
+  color: #fff;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+  transition: transform var(--transition);
+}
+
+.drawer-content .video-overlay:hover svg {
+  transform: scale(1.1);
+}
+
+.drawer-content .video-overlay.hidden {
+  display: none;
+}
+
+/* Media: audio */
+.drawer-content .media-audio {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 20px 24px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.drawer-content .audio-icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #A78BFA);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.drawer-content .audio-icon:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.drawer-content .audio-icon svg {
+  width: 20px;
+  height: 20px;
+  color: #fff;
+}
+
+.drawer-content .audio-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.drawer-content .audio-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.drawer-content .audio-progress {
+  width: 100%;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.drawer-content .audio-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #A78BFA);
+  border-radius: 2px;
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+.drawer-content .audio-time {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Media: image lightbox */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  cursor: zoom-out;
+}
+
+.lightbox-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-overlay img {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: var(--radius-sm);
+  object-fit: contain;
 }
 
 /* Mobile: bottom drawer */

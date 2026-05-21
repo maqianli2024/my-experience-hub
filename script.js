@@ -140,15 +140,30 @@ if (prefersReducedMotion.matches) {
 // ==================== Article Content ====================
 const articles = {
   '从零搭建个人网站的完整指南': {
-    content: `<p>想要一个属于自己的网站，但不想花钱买域名和服务器？完全可以。借助 GitHub Pages，你可以零成本搭建一个专业级的个人网站。</p>
+    content: `<div class="media-video">
+  <video src="https://www.w3schools.com/html/mov_bbb.mp4" preload="metadata" poster="https://picsum.photos/seed/github/800/450"></video>
+  <div class="video-overlay" onclick="playVideo(this)">
+    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+  </div>
+</div>
+<p class="drawer-media-caption">GitHub Pages 部署演示视频</p>
+<p>想要一个属于自己的网站，但不想花钱买域名和服务器？完全可以。借助 GitHub Pages，你可以零成本搭建一个专业级的个人网站。</p>
 <h3>为什么选择 GitHub Pages</h3>
 <p>GitHub Pages 提供免费的静态网站托管，自带 HTTPS、全球 CDN，推代码自动部署。对于个人博客、作品集、文档站点来说，它是最佳起点。</p>
+<img src="https://picsum.photos/seed/pages-setup/800/400" alt="GitHub Pages 设置界面" loading="lazy">
+<p class="drawer-media-caption">GitHub Pages 设置界面截图</p>
 <h3>三步完成部署</h3>
 <ol>
 <li><strong>创建仓库</strong>：在 GitHub 新建一个仓库，命名格式为 <code>用户名.github.io</code></li>
 <li><strong>编写网站</strong>：用 HTML/CSS/JS 创建 <code>index.html</code>，推送到仓库</li>
 <li><strong>开启 Pages</strong>：进入仓库 Settings → Pages，选择 main 分支</li>
 </ol>
+<pre><code># 初始化并推送
+git init
+git add .
+git commit -m "first commit"
+git remote add origin https://github.com/用户名/用户名.github.io.git
+git push -u origin main</code></pre>
 <p>等待 1-2 分钟，访问 <code>https://用户名.github.io</code> 即可看到你的网站。</p>
 <h3>进阶优化</h3>
 <ul>
@@ -161,7 +176,19 @@ const articles = {
   },
 
   '从哑巴英语到流利口语的突破路径': {
-    content: `<p>学了十几年英语，考试分数不低，但一开口就卡壳？这是绝大多数中国英语学习者的共同痛点。问题不在你的语言天赋，而在学习方法。</p>
+    content: `<div class="media-audio">
+  <div class="audio-icon" onclick="toggleAudio(this)">
+    <svg class="audio-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+    <svg class="audio-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+  </div>
+  <div class="audio-info">
+    <div class="audio-title">跟读练习：TED Talk Excerpt</div>
+    <div class="audio-progress" onclick="seekAudio(event, this)"><div class="audio-progress-bar"></div></div>
+    <div class="audio-time"><span class="audio-current">0:00</span><span class="audio-duration">0:30</span></div>
+    <audio preload="none" src="https://www.w3schools.com/html/horse.mp3"></audio>
+  </div>
+</div>
+<p>学了十几年英语，考试分数不低，但一开口就卡壳？这是绝大多数中国英语学习者的共同痛点。问题不在你的语言天赋，而在学习方法。</p>
 <h3>核心理念：不要背单词，要背句子</h3>
 <p>孤立的单词没有生命力。你需要的是<strong>语块</strong>——一个完整的表达单元。比如 "I'm looking forward to" 比单独记 "look forward to" 有效十倍。</p>
 <h3>三个突破阶段</h3>
@@ -278,7 +305,9 @@ const articles = {
   },
 
   '一个人旅行的 10 个小技巧': {
-    content: `<p>独自旅行不是孤独，是自由。走过 15 个城市后，我总结了这些让旅程更顺畅的实用技巧。</p>
+    content: `<img src="https://picsum.photos/seed/travel-solo/800/400" alt="独行旅途风景" loading="lazy">
+<p class="drawer-media-caption">独自旅行途中拍摄的风景</p>
+<p>独自旅行不是孤独，是自由。走过 15 个城市后，我总结了这些让旅程更顺畅的实用技巧。</p>
 <h3>行前准备</h3>
 <ol>
 <li><strong>只带一个登机箱</strong>：托运行李是旅行焦虑的主要来源，轻装上阵才能说走就走</li>
@@ -414,3 +443,84 @@ document.querySelectorAll('.tl-item').forEach((item) => {
     }
   });
 });
+
+// ==================== Media: Lightbox ====================
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+
+document.addEventListener('click', (e) => {
+  const img = e.target.closest('.drawer-content img');
+  if (img && !img.closest('.media-audio')) {
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+    lightbox.classList.add('open');
+  }
+});
+
+lightbox.addEventListener('click', () => {
+  lightbox.classList.remove('open');
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') lightbox.classList.remove('open');
+});
+
+// ==================== Media: Video ====================
+function playVideo(overlay) {
+  const video = overlay.previousElementSibling;
+  video.play();
+  overlay.classList.add('hidden');
+  video.addEventListener('ended', () => overlay.classList.remove('hidden'), { once: true });
+  video.addEventListener('click', () => {
+    if (video.paused) {
+      video.play();
+      overlay.classList.add('hidden');
+    } else {
+      video.pause();
+      overlay.classList.remove('hidden');
+    }
+  });
+}
+
+// ==================== Media: Audio ====================
+function toggleAudio(icon) {
+  const wrapper = icon.closest('.media-audio');
+  const audio = wrapper.querySelector('audio');
+  const playIcon = icon.querySelector('.audio-play');
+  const pauseIcon = icon.querySelector('.audio-pause');
+  const progressBar = wrapper.querySelector('.audio-progress-bar');
+  const currentTimeEl = wrapper.querySelector('.audio-current');
+
+  if (audio.paused) {
+    audio.play();
+    playIcon.style.display = 'none';
+    pauseIcon.style.display = 'block';
+  } else {
+    audio.pause();
+    playIcon.style.display = 'block';
+    pauseIcon.style.display = 'none';
+  }
+
+  audio.ontimeupdate = () => {
+    const pct = (audio.currentTime / audio.duration) * 100;
+    progressBar.style.width = `${pct}%`;
+    const m = Math.floor(audio.currentTime / 60);
+    const s = Math.floor(audio.currentTime % 60).toString().padStart(2, '0');
+    currentTimeEl.textContent = `${m}:${s}`;
+  };
+
+  audio.onended = () => {
+    playIcon.style.display = 'block';
+    pauseIcon.style.display = 'none';
+    progressBar.style.width = '0%';
+    currentTimeEl.textContent = '0:00';
+  };
+}
+
+function seekAudio(e, progressEl) {
+  const audio = progressEl.closest('.media-audio').querySelector('audio');
+  if (!audio.duration) return;
+  const rect = progressEl.getBoundingClientRect();
+  const pct = (e.clientX - rect.left) / rect.width;
+  audio.currentTime = pct * audio.duration;
+}
