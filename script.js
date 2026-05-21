@@ -338,23 +338,30 @@ document.addEventListener('keydown', (e) => {
 });
 
 // Bind click on timeline cards (event delegation)
-document.querySelector('.timeline').addEventListener('click', (e) => {
-  const card = e.target.closest('.tl-card');
-  if (!card) return;
-  const item = card.closest('.tl-item');
-  if (!item) return;
-  const titleEl = item.querySelector('.card-title');
-  if (!titleEl) return;
-  const title = titleEl.textContent;
-  const category = item.dataset.category;
-  const dateEl = item.querySelector('.tl-month');
-  const dayEl = item.querySelector('.tl-day');
-  const date = dateEl.textContent ? `${dateEl.textContent}.${dayEl.textContent}` : dayEl.textContent;
-  const article = articles[title];
-  if (article) {
-    openDrawer(title, category, date, article.content);
-  }
-});
+const timeline = document.querySelector('.timeline');
+if (timeline) {
+  timeline.addEventListener('click', (e) => {
+    const card = e.target.closest('.tl-card');
+    if (!card) return;
+    const item = card.closest('.tl-item');
+    if (!item) return;
+    const titleEl = item.querySelector('.card-title');
+    if (!titleEl) return;
+    const title = titleEl.textContent.trim();
+    const category = item.dataset.category;
+    const dateEl = item.querySelector('.tl-month');
+    const dayEl = item.querySelector('.tl-day');
+    const date = dateEl && dateEl.textContent ? `${dateEl.textContent}.${dayEl.textContent}` : dayEl.textContent;
+    const article = articles[title];
+    if (article) {
+      openDrawer(title, category, date, article.content);
+    } else {
+      console.warn('Article not found:', title, 'Available:', Object.keys(articles));
+    }
+  });
+} else {
+  console.error('Timeline element not found');
+}
 
 // ==================== Media: Lightbox ====================
 const lightbox = document.getElementById('lightbox');
