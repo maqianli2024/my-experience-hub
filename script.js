@@ -6,6 +6,18 @@ navLinks.addEventListener('click', (e) => {
   if (e.target.tagName === 'A') navLinks.classList.remove('open');
 });
 
+// ==================== Theme toggle ====================
+const themeToggle = document.getElementById('themeToggle');
+const savedTheme = localStorage.getItem('theme') || 'dark';
+document.documentElement.dataset.theme = savedTheme;
+
+themeToggle.addEventListener('click', () => {
+  const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  localStorage.setItem('theme', next);
+  updateNavbar();
+});
+
 // ==================== Filter timeline ====================
 const filterBtns = document.querySelectorAll('.filter-btn');
 const tlItems = document.querySelectorAll('.tl-item');
@@ -105,15 +117,17 @@ window.addEventListener('scroll', () => {
 
 // Navbar solidify on scroll
 const navbar = document.querySelector('.navbar');
-window.addEventListener('scroll', () => {
+function updateNavbar() {
+  const isDark = document.documentElement.dataset.theme !== 'light';
   if (window.scrollY > 50) {
-    navbar.style.borderBottomColor = 'rgba(255,255,255,0.1)';
-    navbar.style.background = 'rgba(11,11,16,0.9)';
+    navbar.style.background = isDark ? 'rgba(11,11,16,0.92)' : 'rgba(250,251,252,0.95)';
+    navbar.style.borderBottomColor = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)';
   } else {
-    navbar.style.borderBottomColor = '';
     navbar.style.background = '';
+    navbar.style.borderBottomColor = '';
   }
-}, { passive: true });
+}
+window.addEventListener('scroll', updateNavbar, { passive: true });
 
 // ==================== Reduced motion ====================
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
