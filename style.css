@@ -127,6 +127,7 @@ a {
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border-bottom: 1px solid var(--border);
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .nav-container {
@@ -647,7 +648,102 @@ a {
 }
 
 /* ==================== Responsive ==================== */
+
+/* Small phones (≤374px) */
+@media (max-width: 374px) {
+  .hero-title {
+    font-size: 36px;
+    letter-spacing: -1.5px;
+  }
+
+  .hero-subtitle {
+    font-size: 15px;
+  }
+
+  .hero-badge {
+    font-size: 12px;
+    padding: 5px 12px;
+  }
+
+  .btn-primary {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+
+  .stat-number {
+    font-size: 24px;
+  }
+
+  .stats-grid {
+    gap: 16px;
+  }
+
+  .stat-divider {
+    height: 30px;
+  }
+
+  .filter-btn {
+    padding: 7px 14px;
+    font-size: 13px;
+  }
+
+  .card-inner {
+    padding: 20px;
+  }
+
+  .card-title {
+    font-size: 15px;
+  }
+
+  .card-excerpt {
+    font-size: 13px;
+  }
+
+  .section-title {
+    font-size: 24px;
+  }
+
+  .about-text p {
+    font-size: 14px;
+  }
+
+  .tag {
+    padding: 5px 12px;
+    font-size: 12px;
+  }
+}
+
+/* Phones (375px – 480px) */
+@media (min-width: 375px) and (max-width: 480px) {
+  .hero-title {
+    font-size: 42px;
+    letter-spacing: -1.5px;
+  }
+
+  .hero-subtitle {
+    font-size: 15px;
+  }
+
+  .btn-primary {
+    padding: 13px 28px;
+  }
+
+  .stat-number {
+    font-size: 28px;
+  }
+
+  .stats-grid {
+    gap: 20px;
+  }
+
+  .card-inner {
+    padding: 22px;
+  }
+}
+
+/* Tablets & below (≤768px) */
 @media (max-width: 768px) {
+  /* Navbar */
   .nav-links {
     display: none;
     position: absolute;
@@ -666,16 +762,108 @@ a {
   .nav-links.open { display: flex; }
   .menu-toggle { display: flex; }
 
-  .card-grid {
-    grid-template-columns: 1fr;
+  /* Hero */
+  .hero {
+    padding: 100px 20px 60px;
+    min-height: auto;
+    min-height: 100svh;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero-badge {
+    margin-bottom: 24px;
+  }
+
+  /* Aurora — smaller blobs on mobile */
+  .aurora-blob {
+    filter: blur(80px);
+    opacity: 0.08;
+  }
+
+  .blob-1 {
+    width: 350px;
+    height: 350px;
+    top: -100px;
+    right: -80px;
+  }
+
+  .blob-2 {
+    width: 300px;
+    height: 300px;
+    bottom: -80px;
+    left: -80px;
+  }
+
+  .blob-3 {
+    width: 250px;
+    height: 250px;
+  }
+
+  /* Stats */
+  .stats {
+    padding: 20px 20px 60px;
   }
 
   .stats-grid {
     gap: 20px;
   }
 
-  .stat-number {
-    font-size: 28px;
+  .stat-divider {
+    height: 36px;
+  }
+
+  /* Explore */
+  .explore {
+    padding: 60px 20px;
+  }
+
+  .section-header {
+    margin-bottom: 36px;
+  }
+
+  /* Filter — horizontal scroll on tiny screens */
+  .filter-bar {
+    gap: 6px;
+    margin-bottom: 32px;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+
+  .filter-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-btn {
+    flex-shrink: 0;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Cards — single column */
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .card-inner {
+    padding: 24px;
+  }
+
+  /* About */
+  .about {
+    padding: 60px 20px;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 24px 20px;
   }
 
   .footer-content {
@@ -683,8 +871,105 @@ a {
     gap: 16px;
     text-align: center;
   }
+}
+
+/* Large phones landscape & small tablets (481px – 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+/* Tablets (769px – 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .explore {
+    padding: 80px 32px;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .hero-title {
+    font-size: 56px;
+  }
+}
+
+/* Desktop (≥1025px) — ensure no horizontal overflow */
+@media (min-width: 1025px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Safe area support for notched phones */
+@supports (padding: env(safe-area-inset-top)) {
+  .navbar {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .nav-container {
+    height: calc(64px + env(safe-area-inset-top));
+  }
 
   .hero {
-    padding: 100px 20px 60px;
+    padding-top: calc(100px + env(safe-area-inset-top));
+  }
+
+  .footer {
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  }
+}
+
+/* Prevent horizontal overflow globally */
+html, body {
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Touch-friendly: min 44px hit targets */
+.btn-primary,
+.filter-btn,
+.menu-toggle,
+.nav-links a {
+  min-height: 44px;
+}
+
+/* Smooth momentum scroll on iOS */
+body {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Reduce 300ms tap delay on mobile */
+a, button, .card, .filter-btn, .tag {
+  touch-action: manipulation;
+}
+
+/* Mobile: active state instead of hover for cards */
+@media (max-width: 768px) {
+  .card:hover {
+    transform: none;
+  }
+
+  .card:active {
+    transform: scale(0.98);
+  }
+
+  .card:active .card-inner {
+    border-color: var(--border-hover);
+    background: var(--bg-card-hover);
+  }
+
+  .card:active .card-glow {
+    opacity: 1;
+  }
+
+  /* Close menu on link tap */
+  .nav-links a {
+    padding: 10px 0;
+    display: block;
+    font-size: 16px;
   }
 }

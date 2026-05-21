@@ -89,3 +89,34 @@ document.querySelectorAll('.card').forEach((card) => {
     card.style.setProperty('--glow-y', `${y}px`);
   });
 });
+
+// Close mobile menu on scroll
+let scrollTimer;
+window.addEventListener('scroll', () => {
+  clearTimeout(scrollTimer);
+  scrollTimer = setTimeout(() => {
+    navLinks.classList.remove('open');
+  }, 100);
+}, { passive: true });
+
+// Navbar solidify on scroll
+const navbar = document.querySelector('.navbar');
+let lastScrollY = 0;
+window.addEventListener('scroll', () => {
+  lastScrollY = window.scrollY;
+  if (lastScrollY > 50) {
+    navbar.style.borderBottomColor = 'rgba(255,255,255,0.1)';
+    navbar.style.background = 'rgba(11,11,16,0.9)';
+  } else {
+    navbar.style.borderBottomColor = 'var(--border)';
+    navbar.style.background = 'rgba(11,11,16,0.7)';
+  }
+}, { passive: true });
+
+// Prefers reduced motion check
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+if (prefersReducedMotion.matches) {
+  document.querySelectorAll('.aurora-blob').forEach((blob) => {
+    blob.style.animation = 'none';
+  });
+}
