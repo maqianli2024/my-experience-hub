@@ -1,14 +1,3 @@
-// Theme toggle
-const themeToggle = document.getElementById('themeToggle');
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme) document.documentElement.dataset.theme = savedTheme;
-
-themeToggle.addEventListener('click', () => {
-  const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-  document.documentElement.dataset.theme = next;
-  localStorage.setItem('theme', next);
-});
-
 // Mobile menu
 const menuToggle = document.getElementById('menuToggle');
 const navLinks = document.querySelector('.nav-links');
@@ -32,21 +21,37 @@ filterBtns.forEach((btn) => {
   });
 });
 
-// Scroll animations
-const observer = new IntersectionObserver(
+// Scroll reveal
+const revealObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
+      if (entry.isIntersecting) entry.target.classList.add('visible');
     });
   },
   { threshold: 0.1 }
 );
 
-document.querySelectorAll('.card, .stat-item, .about-content').forEach((el) => {
+document.querySelectorAll('.card, .stat-item, .about-content, .section-header').forEach((el) => {
   el.classList.add('fade-in');
-  observer.observe(el);
+  revealObserver.observe(el);
+});
+
+// Stagger card entrance
+const cardObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        entry.target.style.transitionDelay = `${i * 60}ms`;
+        entry.target.classList.add('visible');
+      }
+    });
+  },
+  { threshold: 0.05 }
+);
+
+document.querySelectorAll('.card').forEach((card) => {
+  card.classList.add('fade-in');
+  cardObserver.observe(card);
 });
 
 // Counter animation
@@ -60,7 +65,8 @@ const counterObserver = new IntersectionObserver(
       const start = performance.now();
       const tick = (now) => {
         const progress = Math.min((now - start) / duration, 1);
-        el.textContent = Math.floor(progress * target);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(eased * target);
         if (progress < 1) requestAnimationFrame(tick);
         else el.textContent = target;
       };
@@ -72,3 +78,14 @@ const counterObserver = new IntersectionObserver(
 );
 
 document.querySelectorAll('.stat-number').forEach((el) => counterObserver.observe(el));
+
+// Card glow follow mouse
+document.querySelectorAll('.card').forEach((card) => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    card.style.setProperty('--glow-x', `${x}px`);
+    card.style.setProperty('--glow-y', `${y}px`);
+  });
+});

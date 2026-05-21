@@ -3,25 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>经验分享 | Experience Hub</title>
+  <title>Experience Hub | 经验分享</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <!-- Aurora Background -->
+  <div class="aurora" aria-hidden="true">
+    <div class="aurora-blob blob-1"></div>
+    <div class="aurora-blob blob-2"></div>
+    <div class="aurora-blob blob-3"></div>
+  </div>
+
   <!-- Navigation -->
   <nav class="navbar">
     <div class="nav-container">
-      <a href="#" class="logo">EH<span class="logo-dot">.</span></a>
+      <a href="#" class="logo">
+        <span class="logo-icon">EH</span>
+      </a>
       <ul class="nav-links">
         <li><a href="#home">首页</a></li>
         <li><a href="#explore">探索</a></li>
         <li><a href="#about">关于</a></li>
       </ul>
-      <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
-        <span class="icon-sun">&#9728;</span>
-        <span class="icon-moon">&#9790;</span>
-      </button>
       <button class="menu-toggle" id="menuToggle" aria-label="菜单">
         <span></span><span></span><span></span>
       </button>
@@ -31,16 +36,20 @@
   <!-- Hero -->
   <section class="hero" id="home">
     <div class="hero-content">
-      <p class="hero-greeting">你好，欢迎来到</p>
-      <h1 class="hero-title">经验分享<span class="highlight">Hub</span></h1>
-      <p class="hero-subtitle">记录成长、分享所学。这里汇集了我在技术、生活、职业和英语学习中的真实经验与感悟。</p>
-      <a href="#explore" class="btn-primary">开始探索</a>
-    </div>
-    <div class="hero-decoration">
-      <div class="floating-card card-1">Tech</div>
-      <div class="floating-card card-2">Life</div>
-      <div class="floating-card card-3">Career</div>
-      <div class="floating-card card-4">English</div>
+      <div class="hero-badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span>真实经验，知行合一</span>
+      </div>
+      <h1 class="hero-title">
+        用经验<br><span class="gradient-text">照亮前路</span>
+      </h1>
+      <p class="hero-subtitle">记录成长、分享所学。汇集技术、生活、职业和英语学习中的真实经验与感悟。</p>
+      <div class="hero-actions">
+        <a href="#explore" class="btn-primary">
+          <span>开始探索</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -51,10 +60,12 @@
         <span class="stat-number" data-target="12">0</span>
         <span class="stat-label">篇文章</span>
       </div>
+      <div class="stat-divider"></div>
       <div class="stat-item">
         <span class="stat-number" data-target="4">0</span>
         <span class="stat-label">个分类</span>
       </div>
+      <div class="stat-divider"></div>
       <div class="stat-item">
         <span class="stat-number" data-target="150">0</span>
         <span class="stat-label">天持续更新</span>
@@ -65,6 +76,7 @@
   <!-- Explore -->
   <section class="explore" id="explore">
     <div class="section-header">
+      <span class="section-tag">Explore</span>
       <h2 class="section-title">探索经验</h2>
       <p class="section-desc">选择你感兴趣的领域，发现有价值的经验分享</p>
     </div>
@@ -80,125 +92,161 @@
     <div class="card-grid">
       <!-- Tech -->
       <article class="card" data-category="tech">
-        <div class="card-badge tech">技术</div>
-        <h3 class="card-title">从零搭建个人网站的完整指南</h3>
-        <p class="card-excerpt">不需要域名、不需要服务器，用 GitHub Pages 免费部署你的第一个网站。一步步带你从本地开发到线上访问。</p>
-        <div class="card-footer">
-          <span class="card-date">2026-05-20</span>
-          <span class="card-read">5 min</span>
+        <div class="card-glow"></div>
+        <div class="card-inner">
+          <div class="card-badge tech">技术</div>
+          <h3 class="card-title">从零搭建个人网站的完整指南</h3>
+          <p class="card-excerpt">不需要域名、不需要服务器，用 GitHub Pages 免费部署你的第一个网站。一步步带你从本地开发到线上访问。</p>
+          <div class="card-footer">
+            <span class="card-date">2026-05-20</span>
+            <span class="card-read">5 min</span>
+          </div>
         </div>
       </article>
 
       <article class="card" data-category="tech">
-        <div class="card-badge tech">技术</div>
-        <h3 class="card-title">Git 工作流：从混乱到有序</h3>
-        <p class="card-excerpt">多人协作时 Git 分支管理的实战经验，如何用 rebase 保持提交历史干净，以及 Code Review 的最佳实践。</p>
-        <div class="card-footer">
-          <span class="card-date">2026-05-15</span>
-          <span class="card-read">8 min</span>
+        <div class="card-glow"></div>
+        <div class="card-inner">
+          <div class="card-badge tech">技术</div>
+          <h3 class="card-title">Git 工作流：从混乱到有序</h3>
+          <p class="card-excerpt">多人协作时 Git 分支管理的实战经验，如何用 rebase 保持提交历史干净，以及 Code Review 的最佳实践。</p>
+          <div class="card-footer">
+            <span class="card-date">2026-05-15</span>
+            <span class="card-read">8 min</span>
+          </div>
         </div>
       </article>
 
       <article class="card" data-category="tech">
-        <div class="card-badge tech">技术</div>
-        <h3 class="card-title">Docker 容器化入门实战</h3>
-        <p class="card-excerpt">把你的应用装进容器，一次构建到处运行。从 Dockerfile 编写到 docker-compose 编排，用真实项目演示。</p>
-        <div class="card-footer">
-          <span class="card-date">2026-05-10</span>
-          <span class="card-read">10 min</span>
+        <div class="card-glow"></div>
+        <div class="card-inner">
+          <div class="card-badge tech">技术</div>
+          <h3 class="card-title">Docker 容器化入门实战</h3>
+          <p class="card-excerpt">把你的应用装进容器，一次构建到处运行。从 Dockerfile 编写到 docker-compose 编排，用真实项目演示。</p>
+          <div class="card-footer">
+            <span class="card-date">2026-05-10</span>
+            <span class="card-read">10 min</span>
+          </div>
         </div>
       </article>
 
       <!-- Life -->
       <article class="card" data-category="life">
-        <div class="card-badge life">生活</div>
-        <h3 class="card-title">极简生活实践：断舍离一年后的感悟</h3>
-        <p class="card-excerpt">扔掉 80% 的物品后，我获得的不只是整洁的空间，更是内心的平静。分享我的极简生活方法论和实际收获。</p>
-        <div class="card-footer">
-          <span class="card-date">2026-05-18</span>
-          <span class="card-read">6 min</span>
+        <div class="card-glow"></div>
+        <div class="card-inner">
+          <div class="card-badge life">生活</div>
+          <h3 class="card-title">极简生活实践：断舍离一年后的感悟</h3>
+          <p class="card-excerpt">扔掉 80% 的物品后，我获得的不只是整洁的空间，更是内心的平静。分享我的极简生活方法论和实际收获。</p>
+          <div class="card-footer">
+            <span class="card-date">2026-05-18</span>
+            <span class="card-read">6 min</span>
+          </div>
         </div>
       </article>
 
       <article class="card" data-category="life">
-        <div class="card-badge life">生活</div>
-        <h3 class="card-title">一个人旅行的 10 个小技巧</h3>
-        <p class="card-excerpt">独自走过 15 个城市后总结出的实用攻略：如何规划路线、选择住宿、保证安全，以及独处的艺术。</p>
-        <div class="card-footer">
-          <span class="card-date">2026-05-08</span>
-          <span class="card-read">7 min</span>
+        <div class="card-glow"></div>
+        <div class="card-inner">
+          <div class="card-badge life">生活</div>
+          <h3 class="card-title">一个人旅行的 10 个小技巧</h3>
+          <p class="card-excerpt">独自走过 15 个城市后总结出的实用攻略：如何规划路线、选择住宿、保证安全，以及独处的艺术。</p>
+          <div class="card-footer">
+            <span class="card-date">2026-05-08</span>
+            <span class="card-read">7 min</span>
+          </div>
         </div>
       </article>
 
       <article class="card" data-category="life">
-        <div class="card-badge life">生活</div>
-        <h3 class="card-title">读书笔记方法论：从读过到读懂</h3>
-        <p class="card-excerpt">分享我验证有效的读书笔记体系：结构化笔记、思维导图、费曼技巧的结合运用，让知识真正内化。</p>
-        <div class="card-footer">
-          <span class="card-date">2026-05-03</span>
-          <span class="card-read">5 min</span>
+        <div class="card-glow"></div>
+        <div class="card-inner">
+          <div class="card-badge life">生活</div>
+          <h3 class="card-title">读书笔记方法论：从读过到读懂</h3>
+          <p class="card-excerpt">分享我验证有效的读书笔记体系：结构化笔记、思维导图、费曼技巧的结合运用，让知识真正内化。</p>
+          <div class="card-footer">
+            <span class="card-date">2026-05-03</span>
+            <span class="card-read">5 min</span>
+          </div>
         </div>
       </article>
 
       <!-- Career -->
       <article class="card" data-category="career">
-        <div class="card-badge career">职业</div>
-        <h3 class="card-title">如何写一份让人想约面试的简历</h3>
-        <p class="card-excerpt">简历不是工作清单，是你的个人广告。用 STAR 法则量化成果，用数据说话，让 HR 在 10 秒内记住你。</p>
-        <div class="card-footer">
-          <span class="card-date">2026-05-17</span>
-          <span class="card-read">6 min</span>
+        <div class="card-glow"></div>
+        <div class="card-inner">
+          <div class="card-badge career">职业</div>
+          <h3 class="card-title">如何写一份让人想约面试的简历</h3>
+          <p class="card-excerpt">简历不是工作清单，是你的个人广告。用 STAR 法则量化成果，用数据说话，让 HR 在 10 秒内记住你。</p>
+          <div class="card-footer">
+            <span class="card-date">2026-05-17</span>
+            <span class="card-read">6 min</span>
+          </div>
         </div>
       </article>
 
       <article class="card" data-category="career">
-        <div class="card-badge career">职业</div>
-        <h3 class="card-title">向上管理：和老板高效沟通的方法</h3>
-        <p class="card-excerpt">向上管理不是拍马屁，是让信息对齐、目标一致。分享我踩过的坑和验证有效的沟通框架。</p>
-        <div class="card-footer">
-          <span class="card-date">2026-05-12</span>
-          <span class="card-read">8 min</span>
+        <div class="card-glow"></div>
+        <div class="card-inner">
+          <div class="card-badge career">职业</div>
+          <h3 class="card-title">向上管理：和老板高效沟通的方法</h3>
+          <p class="card-excerpt">向上管理不是拍马屁，是让信息对齐、目标一致。分享我踩过的坑和验证有效的沟通框架。</p>
+          <div class="card-footer">
+            <span class="card-date">2026-05-12</span>
+            <span class="card-read">8 min</span>
+          </div>
         </div>
       </article>
 
       <article class="card" data-category="career">
-        <div class="card-badge career">职业</div>
-        <h3 class="card-title">技术面试准备清单与心态调整</h3>
-        <p class="card-excerpt">算法、系统设计、行为面试三大模块的准备策略，以及如何在高压环境下保持稳定发挥的心理技巧。</p>
-        <div class="card-footer">
-          <span class="card-date">2026-05-05</span>
-          <span class="card-read">12 min</span>
+        <div class="card-glow"></div>
+        <div class="card-inner">
+          <div class="card-badge career">职业</div>
+          <h3 class="card-title">技术面试准备清单与心态调整</h3>
+          <p class="card-excerpt">算法、系统设计、行为面试三大模块的准备策略，以及如何在高压环境下保持稳定发挥的心理技巧。</p>
+          <div class="card-footer">
+            <span class="card-date">2026-05-05</span>
+            <span class="card-read">12 min</span>
+          </div>
         </div>
       </article>
 
       <!-- English -->
       <article class="card" data-category="english">
-        <div class="card-badge english">英语</div>
-        <h3 class="card-title">从哑巴英语到流利口语的突破路径</h3>
-        <p class="card-excerpt">不要背单词，要背句子。不要学语法，要学表达。分享我从不敢开口到自如对话的实用方法。</p>
-        <div class="card-footer">
-          <span class="card-date">2026-05-19</span>
-          <span class="card-read">7 min</span>
+        <div class="card-glow"></div>
+        <div class="card-inner">
+          <div class="card-badge english">英语</div>
+          <h3 class="card-title">从哑巴英语到流利口语的突破路径</h3>
+          <p class="card-excerpt">不要背单词，要背句子。不要学语法，要学表达。分享我从不敢开口到自如对话的实用方法。</p>
+          <div class="card-footer">
+            <span class="card-date">2026-05-19</span>
+            <span class="card-read">7 min</span>
+          </div>
         </div>
       </article>
 
       <article class="card" data-category="english">
-        <div class="card-badge english">英语</div>
-        <h3 class="card-title">英文阅读提速：告别逐词翻译</h3>
-        <p class="card-excerpt">用意群阅读法取代逐词翻译，用英文思维理解英文。推荐几本适合中级水平的原版书和阅读策略。</p>
-        <div class="card-footer">
-          <span class="card-date">2026-05-14</span>
-          <span class="card-read">5 min</span>
+        <div class="card-glow"></div>
+        <div class="card-inner">
+          <div class="card-badge english">英语</div>
+          <h3 class="card-title">英文阅读提速：告别逐词翻译</h3>
+          <p class="card-excerpt">用意群阅读法取代逐词翻译，用英文思维理解英文。推荐几本适合中级水平的原版书和阅读策略。</p>
+          <div class="card-footer">
+            <span class="card-date">2026-05-14</span>
+            <span class="card-read">5 min</span>
+          </div>
         </div>
       </article>
 
       <article class="card" data-category="english">
-        <div class="card-badge english">英语</div>
-        <h3 class="card-title">技术文档写作的英文表达技巧</h3>
-        <p class="card-excerpt">写好英文技术文档不只是英语好就行。结构、逻辑、简洁性缺一不可。附常用句式模板和避坑指南。</p>
-        <div class="card-footer">
-          <span class="card-date">2026-05-01</span>
-          <span class="card-read">9 min</span>
+        <div class="card-glow"></div>
+        <div class="card-inner">
+          <div class="card-badge english">英语</div>
+          <h3 class="card-title">技术文档写作的英文表达技巧</h3>
+          <p class="card-excerpt">写好英文技术文档不只是英语好就行。结构、逻辑、简洁性缺一不可。附常用句式模板和避坑指南。</p>
+          <div class="card-footer">
+            <span class="card-date">2026-05-01</span>
+            <span class="card-read">9 min</span>
+          </div>
         </div>
       </article>
     </div>
@@ -207,17 +255,18 @@
   <!-- About -->
   <section class="about" id="about">
     <div class="about-content">
+      <span class="section-tag">About</span>
+      <h2 class="section-title">关于这个网站</h2>
       <div class="about-text">
-        <h2 class="section-title">关于这个网站</h2>
         <p>这是一个纯粹的经验分享平台。我相信，真实的经验比完美的理论更有价值。</p>
         <p>这里的内容来自我的亲身实践：写代码踩过的坑、生活中领悟的道理、职场上积累的智慧、学英语走过的弯路。</p>
         <p>每一篇文章都是经过验证的方法论，不是纸上谈兵。</p>
-        <div class="about-tags">
-          <span class="tag">持续学习</span>
-          <span class="tag">真实经验</span>
-          <span class="tag">知行合一</span>
-          <span class="tag">分享即成长</span>
-        </div>
+      </div>
+      <div class="about-tags">
+        <span class="tag">持续学习</span>
+        <span class="tag">真实经验</span>
+        <span class="tag">知行合一</span>
+        <span class="tag">分享即成长</span>
       </div>
     </div>
   </section>
@@ -225,11 +274,14 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-content">
-      <p class="footer-text">Experience Hub &copy; 2026 &mdash; 用经验照亮前路</p>
+      <div class="footer-brand">
+        <span class="logo-icon small">EH</span>
+        <span class="footer-text">Experience Hub &copy; 2026</span>
+      </div>
       <div class="footer-links">
         <a href="#">GitHub</a>
         <a href="#">RSS</a>
-        <a href="#">关于</a>
+        <a href="#about">关于</a>
       </div>
     </div>
   </footer>
