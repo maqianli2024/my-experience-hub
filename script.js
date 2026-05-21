@@ -351,16 +351,16 @@ if (timeline) {
     const category = item.dataset.category;
     const dateEl = item.querySelector('.tl-month');
     const dayEl = item.querySelector('.tl-day');
-    const date = dateEl && dateEl.textContent ? `${dateEl.textContent}.${dayEl.textContent}` : dayEl.textContent;
+    const day = dayEl ? dayEl.textContent : '';
+    const month = dateEl ? dateEl.textContent : '';
+    const date = month ? `${month}.${day}` : day;
     const article = articles[title];
     if (article) {
       openDrawer(title, category, date, article.content);
     } else {
-      console.warn('Article not found:', title, 'Available:', Object.keys(articles));
+      console.warn('Article not found:', title);
     }
   });
-} else {
-  console.error('Timeline element not found');
 }
 
 // ==================== Media: Lightbox ====================
